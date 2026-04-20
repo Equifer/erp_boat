@@ -1,0 +1,160 @@
+# services.yaml
+add_maintenance_task:
+  name: "Añadir Tarea de Mantenimiento"
+  description: "Añade una nueva tarea de mantenimiento a ERP Boat."
+  fields:
+    name:
+      name: "Nombre"
+      description: "Nombre de la tarea (ej. Cambio de Aceite)."
+      required: true
+      selector:
+        text:
+    category:
+      name: "Categoría"
+      description: "Categoría (Motor, Casco, Acastillaje, Velería)."
+      required: true
+      selector:
+        select:
+          options:
+            - "Motor"
+            - "Casco"
+            - "Acastillaje"
+            - "Velería"
+    interval_days:
+      name: "Intervalo (Días)"
+      description: "Días entre mantenimientos."
+      required: false
+      selector:
+        number:
+          min: 0
+          max: 3650
+          mode: box
+    interval_hours:
+      name: "Intervalo (Horas)"
+      description: "Horas de uso entre mantenimientos."
+      required: false
+      selector:
+        number:
+          min: 0
+          max: 10000
+          mode: box
+    tracking_sensor:
+      name: "Sensor de Seguimiento (Opcional)"
+      description: "Entidad de Home Assistant que lee las horas (si lo tienes). Si se deja en blanco, será manual."
+      required: false
+      selector:
+        entity:
+          domain: sensor
+
+register_maintenance_done:
+  name: "Registrar Mantenimiento Completado"
+  description: "Marca una tarea como completada hoy y reinicia sus contadores."
+  fields:
+    task_id:
+      name: "ID de la Tarea"
+      description: "El identificador interno de la tarea."
+      required: true
+      selector:
+        text:
+    notes:
+      name: "Notas / Repuestos Usados"
+      description: "Escribe qué repuestos has usado (ej. Filtro Ref. 12345)."
+      required: false
+      selector:
+        text:
+          multiline: true
+
+add_inventory_item:
+  name: "Añadir Artículo al Inventario"
+  description: "Añade un nuevo repuesto, alimento o pertrecho al inventario del barco."
+  fields:
+    name:
+      name: "Nombre del Artículo"
+      description: "Ej: Filtro de Aceite Volvo."
+      required: true
+      selector:
+        text:
+    category:
+      name: "Categoría"
+      description: "Tipo de artículo."
+      required: true
+      selector:
+        select:
+          options:
+            - "Repuestos"
+            - "Pertrechos"
+            - "Alimentación"
+    reference:
+      name: "Referencia / Part Number"
+      description: "Número de referencia del fabricante (opcional)."
+      required: false
+      selector:
+        text:
+    quantity:
+      name: "Cantidad Actual"
+      description: "Unidades en stock."
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 10000
+          mode: box
+    min_quantity:
+      name: "Stock Mínimo (Alerta)"
+      description: "Si la cantidad baja de este número, se mostrará un aviso."
+      required: false
+      selector:
+        number:
+          min: 0
+          max: 1000
+          mode: box
+    location:
+      name: "Ubicación en el Barco"
+      description: "Ej: Sentina estribor, Tambucho popa."
+      required: false
+      selector:
+        text:
+
+update_inventory_stock:
+  name: "Actualizar Stock de Artículo"
+  description: "Añade o consume stock de un artículo existente."
+  fields:
+    item_id:
+      name: "ID del Artículo"
+      description: "Identificador interno del artículo."
+      required: true
+      selector:
+        text:
+    quantity_change:
+      name: "Cambio de Cantidad"
+      description: "Usa números positivos para añadir stock, y negativos para consumir (ej. -1)."
+      required: true
+      selector:
+        number:
+          min: -1000
+          max: 1000
+          mode: box
+
+add_document:
+  name: "Añadir Documento del Barco"
+  description: "Añade un documento o certificado (ej. ITB, Seguro, Bengalas) con su fecha de caducidad."
+  fields:
+    name:
+      name: "Nombre del Documento"
+      description: "Ej: Seguro del Barco, Balsa Salvavidas."
+      required: true
+      selector:
+        text:
+    expiration_date:
+      name: "Fecha de Caducidad"
+      description: "Fecha en formato YYYY-MM-DD."
+      required: true
+      selector:
+        text:
+    notes:
+      name: "Notas"
+      description: "Opcional. Dónde está guardado o póliza."
+      required: false
+      selector:
+        text:
+          multiline: true

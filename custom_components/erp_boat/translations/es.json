@@ -1,0 +1,25 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configuración de ERP Boat",
+        "description": "Selecciona los módulos que deseas activar para tu velero.",
+        "data": {
+          "enable_maintenance": "Activar Gestión de Mantenimientos",
+          "enable_inventory": "Activar Inventario y Repuestos",
+          "enable_tanks": "Activar Gestión de Tanques",
+          "enable_documents": "Activar Gestión de Documentos"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Fallo al conectar",
+      "invalid_auth": "Autenticación inválida",
+      "unknown": "Error inesperado"
+    },
+    "abort": {
+      "already_configured": "El dispositivo ya está configurado",
+      "single_instance_allowed": "Solo se permite una instancia de ERP Boat instalada."
+    }
+  }
+}

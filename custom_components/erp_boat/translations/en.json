@@ -1,0 +1,25 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "ERP Boat Setup",
+        "description": "Select the modules you want to enable for your sailboat.",
+        "data": {
+          "enable_maintenance": "Enable Maintenance Tracker",
+          "enable_inventory": "Enable Inventory & Spares",
+          "enable_tanks": "Enable Tanks Management",
+          "enable_documents": "Enable Documents Tracker"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Device is already configured",
+      "single_instance_allowed": "Only a single instance of ERP Boat is allowed."
+    }
+  }
+}

@@ -1,0 +1,90 @@
+title: ERP Boat
+views:
+  - title: Resumen
+    path: erp-boat-summary
+    icon: mdi:sail-boat
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: sensor.erp_boat_inventory_summary
+            name: Stock Bajo
+            icon: mdi:alert-box-outline
+            color: auto
+            state:
+              - value: 0
+                color: green
+              - operator: '>'
+                value: 0
+                color: red
+          - type: custom:button-card
+            entity: sensor.erp_boat_documents
+            name: Docs a Caducar
+            icon: mdi:file-document-alert
+            state:
+              - value: 0
+                color: green
+              - operator: '>'
+                value: 0
+                color: red
+      
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "Mantenimientos Pendientes"
+        filter:
+          include:
+            - entity_id: "sensor.sailboat_maintenance_*"
+              state: "Warning"
+            - entity_id: "sensor.sailboat_maintenance_*"
+              state: "Critical"
+
+  - title: Mantenimiento
+    path: erp-boat-maintenance
+    icon: mdi:wrench-clock
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "Todos los Mantenimientos"
+        filter:
+          include:
+            - entity_id: "sensor.sailboat_maintenance_*"
+        sort:
+          method: state
+
+  - title: Inventario y Repuestos
+    path: erp-boat-inventory
+    icon: mdi:package-variant-closed
+    cards:
+      - type: markdown
+        title: "Directorio de Stock"
+        content: >
+          | Categoría | Artículo | Referencia | Stock | Ubicación |
+          | :--- | :--- | :--- | :---: | :--- |
+          {% set inventory = state_attr('sensor.erp_boat_inventory_summary', 'items') %}
+          {% if inventory %}
+            {% for item in inventory %}
+            | {{ item.category }} | **{{ item.name }}** | `{{ item.reference }}` | {% if item.quantity <= item.min_quantity %} 🔴 {% else %} 🟢 {% endif %} {{ item.quantity }} | {{ item.location }} |
+            {% endfor %}
+          {% else %}
+            | - | No hay artículos registrados | - | - | - |
+          {% endif %}
+
+  - title: Documentación
+    path: erp-boat-documents
+    icon: mdi:file-document-multiple
+    cards:
+      - type: markdown
+        title: "Caducidades de Documentos"
+        content: >
+          | Documento | Caducidad | Notas |
+          | :--- | :--- | :--- |
+          {% set docs = state_attr('sensor.erp_boat_documents', 'documents') %}
+          {% if docs %}
+            {% for doc in docs %}
+            | **{{ doc.name }}** | {{ doc.expiration_date }} | {{ doc.notes }} |
+            {% endfor %}
+          {% else %}
+            | - | No hay documentos | - |
+          {% endif %}

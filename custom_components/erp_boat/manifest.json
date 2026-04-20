@@ -1,0 +1,11 @@
+{
+  "domain": "erp_boat",
+  "name": "ERP Boat",
+  "version": "1.0.0",
+  "documentation": "https://github.com/USER/erp_boat",
+  "dependencies": [],
+  "codeowners": ["@USER"],
+  "requirements": [],
+  "iot_class": "local_polling",
+  "config_flow": true
+}
