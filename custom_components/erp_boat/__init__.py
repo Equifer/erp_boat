@@ -3,7 +3,7 @@ import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import store
+from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN, STORAGE_KEY, STORAGE_VERSION
 
@@ -17,7 +17,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
 
     # Initialize storage
-    _store = store.Store(hass, STORAGE_VERSION, STORAGE_KEY)
+    _store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
     data = await _store.async_load()
     if data is None:
         data = {
